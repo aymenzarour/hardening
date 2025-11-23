@@ -1,0 +1,4 @@
+# --- Rapports & Logs ---
+reports/*.dat
+reports/*.log
+/var/log/*
