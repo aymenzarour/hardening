@@ -1,0 +1,37 @@
+---
+- name: Configure UFW (Firewall)
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
+- name: Allow Critical Ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - 22
+    - 80
+    - 443
+
+- name: Kernel Hardening (Sysctl) - Fix Lynis warnings
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop:
+    # Interdire les redirections ICMP (Man in the middle)
+    - { key: 'net.ipv4.conf.all.accept_redirects', value: '0' }
+    - { key: 'net.ipv4.conf.default.accept_redirects', value: '0' }
+    - { key: 'net.ipv4.conf.all.log_martians', value: '1' } # Loguer les paquets suspects
+    # Protection contre les attaques temporelles TCP
+    - { key: 'net.ipv4.tcp_timestamps', value: '0' }
+    # Restreindre l'accès au buffer du noyau (dmesg)
+    - { key: 'kernel.dmesg_restrict', value: '1' }
+    # Cacher les pointeurs noyau (Anti-exploit)
+    - { key: 'kernel.kptr_restrict', value: '2' }
+    # Désactiver l'IPv6 si non utilisé (souvent recommandé par Lynis)
+    - { key: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+    - { key: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
