@@ -1,0 +1,24 @@
+---
+- name: Install Security & Monitoring Tools
+  apt:
+    name:
+      - ufw
+      - fail2ban
+      - auditd           # Lynis ACCT-9628
+      - audispd-plugins
+      - debsums          # Lynis PKGS-7370
+      - apt-show-versions
+      - rkhunter         # Lynis HRDN-7230 (Malware scanner)
+      - acct             # Lynis ACCT-9622 (Process accounting)
+    state: present
+    update_cache: yes
+
+- name: Enable Services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - auditd
+    - fail2ban
+    - acct
