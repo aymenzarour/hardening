@@ -74,11 +74,3 @@ Lynis output files and detailed audit reports may contain sensitive system infor
 ## Contributing
 
 Contributions are welcome. Please open issues for bugs, feature requests, or proposals for additional hardening checks. When submitting changes, prefer small focused PRs and include rationale and test steps.
-
-## License
-
-This repository does not include a license file by default — add a `LICENSE` if you wish to permit reuse. If you want a recommendation, MIT is a common permissive choice for Ansible roles.
-
----
-
-If you want, I can also add a quick testing guide (molecule) or example CI job to validate the role on Ubuntu/Debian images.
