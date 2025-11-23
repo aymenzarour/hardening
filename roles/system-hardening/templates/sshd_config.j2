@@ -1,0 +1,60 @@
+# -------------------------------------------------------------------------
+#  SSH CONFIGURATION - MANAGED BY ANSIBLE (Project-Hardening)
+#  DO NOT EDIT MANUALLY - CHANGES WILL BE OVERWRITTEN
+# -------------------------------------------------------------------------
+
+# --- Base Configuration ---
+Port 22
+Protocol 2
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+# --- Host Keys ---
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# --- Logging (Lynis Recommends VERBOSE) ---
+SyslogFacility AUTH
+LogLevel VERBOSE
+
+# --- Authentication ---
+LoginGraceTime 60
+PermitRootLogin no
+StrictModes yes
+MaxAuthTries 3
+MaxSessions 2
+
+# --- Key-Based Auth (YES) ---
+PubkeyAuthentication yes
+AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2
+
+# --- Password Auth (NO) ---
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+KerberosAuthentication no
+GSSAPIAuthentication no
+UsePAM yes
+
+# --- Network & Forwarding (Hardening) ---
+AllowAgentForwarding no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive no
+UseDNS no
+
+# --- Timeout (Disconnect idle sessions) ---
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+# --- System ---
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server
+
+# --- Banner ---
+Banner /etc/issue.net
