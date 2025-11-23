@@ -1,0 +1,19 @@
+---
+- name: Set Legal Banner (Issue)
+  copy:
+    dest: /etc/issue
+    content: |
+      ***************************************************************************
+                            NOTICE TO AUTHORIZED USERS ONLY
+      This computer system is the private property of Aymen Corp.
+      Unauthorized access is prohibited and subject to prosecution.
+      Activity may be monitored and recorded.
+      ***************************************************************************
+
+- name: Set Legal Banner (Issue.net for SSH)
+  copy:
+    dest: /etc/issue.net
+    content: |
+      ***************************************************************************
+                            Authorized Access Only
+      ***************************************************************************
